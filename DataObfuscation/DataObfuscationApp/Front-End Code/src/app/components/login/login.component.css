@@ -1,0 +1,47 @@
+/* .login-gradient{
+  background-image: linear-gradient(to right, #e3f3f8 , #016096);
+  padding-left: 0px!important;
+}
+.text-body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+h1,h2,h3,h4,h5{
+  font-weight: 600;
+}
+
+#signin-btn{
+   width: 50%;
+    max-width: 50%;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+} */
+.btn-signin{
+  /* margin-left:8px; */
+  background-color: #7983DE;
+  color: white;
+  padding: 7px 30px;
+  border: 1px solid #7983DE;
+}
+.btn-contact{
+  color: white;
+  background-color: #7983DE;
+  border: 1px solid #7983DE;
+}
+.welcome-headingMain{
+  color: #7983DE;
+  font-weight: 600;
+}
+.welcome-heading{
+  color: #7983DE;
+}
+.obfuscation-login{
+height: -webkit-fill-available;
+}
+.contactLink{
+  text-decoration:none;
+  color: white;
+}

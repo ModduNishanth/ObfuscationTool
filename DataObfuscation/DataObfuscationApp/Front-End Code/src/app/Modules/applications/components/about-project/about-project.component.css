@@ -1,0 +1,77 @@
+/* .ofsc-bg {
+  background-color: #e3f3f8;
+} */
+.ofsc-content {
+  display: flex;
+  align-items: center;
+}
+.note-list {
+  list-style-type: none;
+  color: #eba346;
+  font-weight: 600;
+}
+ .heading-main{
+  font-weight: 600;
+  padding-top: .5rem;
+}
+.head-text{
+  color: #53BBB8;
+}
+.help-ico{
+  width: 70%;
+}
+
+/* Answers To The Most Raised Queries........................ */
+
+  /* .accordion-item{
+    button.accordion-body{
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        &:focus{
+            outline: none;
+            outline: none;
+            box-shadow: none;
+            border-bottom: 1px solid #dedede;
+        }
+    } */
+
+    .accordion-item .accordion-body button {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+  }
+
+  .accordion-item .accordion-body button:focus {
+      outline: none;
+      box-shadow: none;
+      border-bottom: 1px solid #dedede;
+  }
+
+
+
+  .accordion-button:not(.collapsed) {
+    background-color: #7983DE;
+    color: white;
+  }
+  .accordion-button {
+    background-color: #7983DE;
+    color: white;
+  }
+  .accordion-item {
+    background-color: transparent;
+    border-bottom: 1px solid #a5a5a5;
+    border: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
+}
+.accordion-button:focus {
+  background-color: white;
+    color: #7983DE;
+    /* background-color: white;
+    color: #212529; */
+}
+.accordion-body {
+    background-color: white;
+    padding: 1.6rem 1rem;
+}
+.accordion{
+  --bs-accordion-btn-padding-x: 1rem;
+    --bs-accordion-btn-padding-y: .5rem;
+}

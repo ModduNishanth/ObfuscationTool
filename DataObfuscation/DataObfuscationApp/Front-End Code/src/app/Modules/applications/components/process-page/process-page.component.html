@@ -1,0 +1,288 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h4 class="fw-bold pt-3">Mapping</h4>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <form [formGroup]="ConnectionForm">
+    <div class="row table-bg py-3">
+      <div class="col-md-8 col-lg-9">
+        <div class="row">
+          <div class="col-md-6 py-2">
+            <label for="projectName" class="form-label label-bold"
+              >Project Name <span class="required">*</span></label
+            >
+            <select
+              #teams
+              formControlName="tablelist"
+              #project
+              (change)="onSelected(project.value)" class="form-select select-drop form-control"
+            >
+              <option value=""disabled selected>Select Project</option>
+
+              <option
+                *ngFor="let option of ProjectList"
+                [value]="option.projectId"
+              >
+                {{ option.projectName }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-6 py-2">
+            <label for="tableName" class="form-label label-bold"
+              >Table Name <span class="required">*</span></label
+            >
+            <select
+              class="ProjectCol"
+              #teams
+              formControlName="tablelist"
+              #table
+              (change)="onSelectedTable(table.value)"class="form-select select-drop form-control"
+            >
+              <option value="">Select Table</option>
+
+              <option *ngFor="let option of newTableList" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+
+
+          <div class="col-md-12 py-2">
+            <div class="datatable">
+              <table class="table table-responsive">
+                <thead>
+                  <tr>
+                    <th class="colheading">Column</th>
+                    <th class="colheading">Obfuscation Type</th>
+                    <th class="colheading">Function parameter(If any)</th>
+                    <th class="colheading">Preview</th>
+                  </tr>
+                </thead>
+                <tbody >
+                      <tr *ngIf="showInp">
+                        <td>
+                          <input
+                            #searchParam
+                            type="text"
+                            placeholder="Search"
+                            (keyup)="onSearchInput(searchParam?.value)"
+                            (keydown.enter)="$event.preventDefault()"
+                          />
+                        </td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                  <!-- Column Column Code -->
+                  <tr *ngIf="newcolumnList && newcolumnList.length  >0 else noRecords ">
+                  <tr *ngFor="let user of newcolumnList | paginate: { itemsPerPage: 10, currentPage: page }; let i = index" #show>
+                    <td>
+                      <input
+                        class="checkbox"
+                        (change)="CheckedItems($event)"
+                        type="checkbox"
+                        title=""
+                        name="test"
+                        [checked]="user.isSelected == 1"
+                        [value]="user.columnName"
+                      />
+                      {{ user.columnName }}
+                      <!-- <div *ngIf="user.isSelected === 0"  >
+                      </div> -->
+                      <ng-container>
+                        <sub
+                          [ngClass]="{
+                            'green-text': user.dataType === 'New',
+                            'blue-text': user.dataType === 'Existing',
+                            'red-text': user.dataType === 'Deleted'
+                          }"
+                        >
+                          {{ user.dataType }}</sub
+                        >
+                      </ng-container>
+                    </td>
+
+                    <!-- Obfuscation Function Code -->
+                    <td>
+                      <select
+                        formControlName="{{ 'select_' + user.columnName }}"
+                        ngb
+                        (change)="
+                          onSelectedFunction($event, user.columnName, user)
+                        " class="form-select select-drop form-control"
+                      >
+                        <option value="0" >
+                          Select an option for
+                        </option>
+                        <option
+                          *ngFor="let option of Functionlist"
+                          [value]="option.id"
+                        >
+                          {{ option.functionName }}
+                        </option>
+                      </select>
+                    </td>
+                    <!-- constant values.............. -->
+                    <td>
+
+                        <input
+                          type="text"
+                          class="form-control"
+                          [ngModel]="user.constantValue"
+                          [ngModelOptions]="{standalone: true}"
+                          [attr.disabled]="!columnStates[user.columnName] ? 'true' : null"
+
+                          placeholder="Enter the value"
+                          (blur)="onConstantValueChanged($event, user)"
+                        />
+
+
+
+
+
+                    </td>
+
+                    <td class="previewicon"  (click)="onKeywordPreviewSubmit(user.columnName, user.constantValue, user.functionId, user.isSelected)">
+                      <span
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        title="Preview"
+                        class="ico-cursor"
+                      >
+                        <i class="ri-eye-line"></i>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr width="100%">
+                    <td colspan="4">
+                      <button
+                       title="Sync columns from Source Database"
+                        class="btn sync-btn"
+                        type="button"
+                        (click)="Sync()"
+                      >
+                       Fetch Columns
+                      </button>
+
+                      <button
+                      title="Map Columns"
+                        class="btn submit-btn"
+                        type="button"
+                        (click)="getMappingTable()"
+                      >
+                        Map Columns
+                      </button>
+
+                      <button
+                      title="Search column based on keywords and auto select's the matched column"
+                        class="btn apply-keyword-btn "
+                        type="button"
+                        (click)="applyKeyWord()"
+                      >
+                      Apply Keyword Search
+                      </button>
+
+                      <button (click)="downloadFile()" class="btn export-btn"  title="Download Mapped Data">
+                        <i class="fa fa-download"></i>
+                        Export Mapping
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+
+              </table>
+              <div class="pagination" *ngIf="showInp">
+                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-lg-3" *ngIf="keywordList.length>0">
+        <div class="keyword-list-container">
+          <form [formGroup]="myForm">
+
+            <ul class="list-group">
+              <b class="databaseTag" *ngFor="let option of selectedProjectvalue">Default Keywords </b>
+                <li class="list-group-item" *ngFor="let item of keywordList">
+                {{ item.keyWords }}
+                </li>
+           </ul>
+        </form>
+      </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Modal ..................................................................-->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Preview (Top 5 rows)</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Content for the first column -->
+
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Preview Data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- <ng-container *ngFor="let value of FinalPreviewData">
+                    <tr>
+                      <td>Original Data :<b>{{ value?.MaskedData[0]}}  ,</b>  Masked Data : <b>{{ value?.MaskedData[1]}}</b></td>
+                    </tr>
+                  </ng-container> -->
+
+
+                  <ng-container *ngIf="FinalPreviewData?.length>0; else noRecords">
+                    <ng-container *ngFor="let value of FinalPreviewData">
+                      <tr>
+                        <td >
+                          <p class="data-width" style="color:rgb(3, 117, 3)">Original Data :<b >{{ value?.MaskedData[0] }}  ,</b></p>
+                          <p class="data-width" style="color:rgb(224, 96, 10)">Masked Data : <b >{{ value?.MaskedData[1] }}</b></p>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+
+                  <ng-template #noRecords>
+                    <tr>
+                      <td colspan="4" class="text-center">No records found</td>
+                    </tr>
+                  </ng-template>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+  </div>
+</div>

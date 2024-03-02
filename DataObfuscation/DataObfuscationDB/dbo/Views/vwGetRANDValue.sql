@@ -1,0 +1,3 @@
+﻿CREATE VIEW dbo.vwGetRANDValue
+AS
+SELECT RAND() AS Value

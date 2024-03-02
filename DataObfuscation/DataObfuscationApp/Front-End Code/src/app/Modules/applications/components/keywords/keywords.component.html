@@ -1,0 +1,183 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h4 class="fw-bold pt-3">
+        Keywords<span type="button" id="AddProjectButton" class="btn btn-primary button3 px-2 py-0 ms-2"
+          data-bs-toggle="modal" data-bs-target="#AddKeyword" title="Add Keyword"
+          (click)="notSelectedProject()">
+
+        </span>
+      </h4>
+      <!--  <h4 class="fw-bold py-3">
+        Keywords
+        <span class="ps-2"><button class="btn btn-primary addproject" data-bs-toggle="modal"
+            data-bs-target="#AddKeyword" title="Add Keyword" (click)="notSelectedProject()">
+            <i class="ri-add-box-line"></i>
+          </button>
+        </span>
+      </h4>      -->
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="ConnectionForm">
+  <div class="container">
+    <div class="row table-bg py-3">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4 first-dropdown py-3">
+            <label for="projectName" class="form-label label-bold"><b>Project Name <span class="required">
+                  *</span></b></label>
+            <div class="d-flex align-items-center">
+              <select #teams formControlName="tablelist" #project (change)="onSelected(project.value)" class="form-select select-drop form-control">
+                <option value="" disabled selected>Select Project</option>
+                <option *ngFor="let option of ProjectList" [value]="option.projectId">
+                  {{ option.projectName }}
+                </option>
+              </select>
+              <span type="button" id="AddProjectButton" class="btn btn-primary button3 ms-2" data-bs-toggle="modal"
+                data-bs-target="#AddKeyword" title="Add Keyword" (click)="notSelectedProject()">
+                +
+              </span>
+            </div>
+          </div>
+
+          <!-- <div class="col-md-4 second-dropdown py-3">
+            <div class="col-md-2"></div>
+          </div> -->
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="datatable">
+                <table class="w-100 table table-responsive">
+                  <thead>
+                    <tr>
+                      <th class="colheading">Keyword Name</th>
+                      <th class="colheading">Function Name</th>
+                      <th class="colheading">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+
+                  <tbody>
+                    <ng-container *ngIf="keywordList.length > 0; else noRecords">
+                      <tr *ngFor="let item of keywordList | paginate: { itemsPerPage: 10, currentPage: page }; let i = index">
+                        <td>{{ item.keyWords }}</td>
+                        <td>{{ item.displayName }}</td>
+                        <td>
+                          <button type="button" title="Edit"  class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#EditModal"(click)="editToggle(item)">
+                            <span class="icon-padding">
+                              <i class="ri-edit-box-line ico-cursor"></i></span>
+                          </button>
+                          <button class="btn dlt-btn" title="Delete Project" (click)="deleteKeyword(item.keyWords)" title="Delete">
+                            <span class="icon-padding">
+                              <i class="ri-delete-bin-5-line ico-cursor"></i>
+                            </span>
+                          </button>
+                        </td>
+                      </tr>
+                    </ng-container>
+                    <ng-template #noRecords>
+                      <tr>
+                        <td colspan="3" class="text-center">No records found</td>
+                      </tr>
+                    </ng-template>
+                  </tbody>
+
+
+                </table>
+                <div *ngIf="keywordList.length > 10">
+                  <div class="pagination">
+                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="checkValue >= 1">
+        <div id="staticBackdrop" class="modal fade" tabindex="-1" role="dialog" id="AddKeyword"
+          aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Add Keyword</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="addKeywordClose()"></button>
+              </div>
+              <div class="modal-body">
+                <label for="name" class="form-label label-bold">Keyword Name<span class="required"> *</span></label>
+                <input #keyword type="text" formControlName="formInput" class="form-control" maxlength="20"
+                  placeholder="Enter Keyword Name" (input)="keyword.value = trimInputValue(keyword.value)" />
+                  <div *ngIf="keyword.value.length == 20" class="required">
+                    Keyword length should be 20 characters or less.
+                  </div>
+                <div class="col-md-6 first-dropdown py-3">
+                  <label for="Function" class="form-label label-bold">Function Name<span class="required">
+                      *</span></label>
+                  <select class="form-select select-drop form-control" formControlName="dropdownControl" #Projectfunction
+                    (change)="onSelectedFunction(Projectfunction.value)">
+                    <option value="" >Select Function</option>
+                    <option *ngFor="let option of Functionlist; let i = index" [value]="option.id">
+                      {{ option.functionName }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn modal-closeBtn" data-bs-dismiss="modal" (click)="addKeywordClose()">
+                    Close
+                  </button>
+                  <button (click)="addKeyword(keyword.value)" type="button" class="btn modal-saveBtn"
+                    data-bs-dismiss="modal" [disabled]="!areRequiredFieldsValid()">
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Edit keyword model -->
+      <div class="modal fade" id="EditModal" tabindex="-1" data-bs-backdrop="static"  aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Edit Keyword</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="addKeywordClose()"></button>
+              </div>
+              <div class="modal-body">
+                <label for="name" class="form-label label-bold">Keyword Name<span class="required"> *</span></label>
+                <input #keyword type="text" formControlName="formInput" class="form-control"
+                  placeholder="Enter Keyword Name" (input)="keyword.value = trimInputValue(keyword.value)" />
+
+                <div class="col-md-6 first-dropdown py-3">
+                  <label for="Function" class="form-label label-bold">Function Name<span class="required">
+                      *</span></label>
+                  <select formControlName="dropdownControl" #Projectfunction class="form-select select-drop form-control"
+                    (change)="onSelectedFunction(Projectfunction.value)">
+                    <option value="" selected disabled>Select Function</option>
+                    <option *ngFor="let option of Functionlist; let i = index" [value]="option.id">
+                      {{ option.functionName }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn modal-closeBtn" data-bs-dismiss="modal" (click)="addKeywordClose()">
+                    Close
+                  </button>
+                  <button type="button" class="btn modal-saveBtn"
+                    data-bs-dismiss="modal" [disabled]="!areRequiredFieldsValid()" (click)="editKeyword(ConnectionForm.value)">
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</form>

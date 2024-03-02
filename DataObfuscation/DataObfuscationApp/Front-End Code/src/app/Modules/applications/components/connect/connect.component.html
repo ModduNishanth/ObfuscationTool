@@ -1,0 +1,575 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 pt-3">
+      <h4 class="fw-bold">
+        Project<span type="button" id="AddProjectButton" class="btn btn-primary button3 px-2 py-0 ms-2"
+          data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Add Project">
+          +
+        </span>
+      </h4>
+      <!-- <h4 class="fw-bold">
+        Project<span class="ps-2"
+          ><button
+            class="btn btn-primary addproject"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+            title="Add Project"
+          >
+            <i class="ri-add-box-line"></i>
+          </button>
+        </span>
+      </h4>-->
+    </div>
+    <div class="col-md-12 table-bg py-3">
+      <div class="card">
+        <p-table [responsiveLayout]="'scroll'" [value]="Projectli | paginate: { itemsPerPage: 10, currentPage: page }"
+          class="">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th class="colheading">Project Name</th>
+              <th class="colheading">Project Description</th>
+              <th class="colheading">Server Type</th>
+              <th class="colheading">Server Name</th>
+              <th class="colheading">Database Name</th>
+              <th class="colheading">User Name</th>
+              <th class="colheading">Action</th>
+              <th class="colheading">Copy Attribute From</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-option let-columns="columns">
+            <tr>
+              <td>{{ option.projectName }}</td>
+              <td>{{ option.projectDescription }}</td>
+              <td>{{ option.datatype }}</td>
+              <td>{{ option.serverName }}</td>
+              <td>{{ option.databaseName }}</td>
+              <td>{{ option.username }}</td>
+              <!-- //Edit and test connection -->
+
+              <td><span class="d-flex">
+                  <button class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#EditModal"
+                    title="Edit Connection" (click)="editToggle(option)">
+                    <span class="icon-padding">
+                      <i class="ri-edit-box-line ico-cursor"></i></span>
+                  </button>
+
+                  <button class="btn test-btn" [disabled]="isButtonDisabled">
+                    <span class="icon-padding" title="Test Connection" [ngClass]="
+                    option?.connection == 'orange'
+                      ? 'icon-default'
+                      : option?.connection == 'green'
+                      ? 'icon-true'
+                      : option?.connection == 'red'
+                      ? 'icon-false'
+                      : ''
+                  " (click)="onConnect(option.projectId)" data-bs-toggle="modal"><i
+                        class="ri-database-2-line ico-cursor"></i></span>
+                  </button>
+
+                  <button class="btn dlt-btn" data-bs-toggle="modal" data-bs-target="#DeleteModal"
+                    title="Delete Project" (click)="deleteToggle(option)">
+                    <span class="icon-padding">
+                      <i class="ri-delete-bin-5-line ico-cursor"></i>
+                    </span>
+                  </button>
+                </span>
+
+
+                <!-- Assuming you have a DeleteModal with the ID "DeleteModal" defined elsewhere -->
+                <div id="DeleteModal" class="modal fade" tabindex="-1" aria-labelledby="DeleteModalLabel"
+                  aria-hidden="true" data-bs-backdrop="static">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="DeleteModalLabel">
+                          Confirm Deletion
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-check d-flex">
+                          <div>
+                            <svg width="24" height="24" style="color: #e4a70c" fill="currentColor" viewBox="0 0 16 16"
+                              class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2">
+                              <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96
+                                    0L.165 13.233c-.457.778.091 1.767.98
+                                    1.767h13.713c.889 0 1.438-.99.98-1.767L8.982
+                                    1.566zM8 5c.535 0 .954.462.9.995l-.35
+                                    3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905
+                                    0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                            </svg>
+                          </div>
+                          <div class="pt-1">
+                            <label class="form-check-label">
+                              Do you want to delete "{{deleteByProjectName}}" Project?
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn modal-closeBtn" data-bs-dismiss="modal">
+                          No
+                        </button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="onDelete()">
+                          Yes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- The icon for deleting a project -->
+
+              </td>
+
+              <!-- //transfer Data -->
+              <!-- <td class="copydatbase">
+                <button class="btn cpy-btn" title="Copy Attribute"
+                data-bs-toggle="modal"
+                data-bs-target="#copyDB"
+                (click)="getcopydata(option)">
+                <span
+                  class="icon-padding">
+                  <i class="ri-file-copy-2-line ico-cursor"></i>
+                </span>
+              </button>
+              </td> -->
+              <td class="copydatbase">
+                <button class="btn cpy-btn" title="Copy Attribute from other project" data-bs-toggle="modal" data-bs-target="#copyDB"
+                  (click)="getcopydata(option)">
+                  <span class="icon-padding">
+                    <i [ngClass]="option.copyAttributeColor" class="ri-file-copy-2-line ico-cursor"></i>
+                  </span>
+                </button>
+              </td>
+
+
+
+            </tr>
+          </ng-template>
+        </p-table>
+        <div *ngIf="Projectli.length > 10">
+          <div class="pagination">
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Project -->
+<div id="staticBackdrop" class="modal" tabindex="-1" role="dialog" data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New Project</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="editClose()"></button>
+      </div>
+      <form [formGroup]="ConnectionForm">
+        <div class="modal-body">
+          <div class="container-fluid my-2">
+            <div class="row">
+              <div class="col-md-6">
+                <!-- Project name....................................... -->
+                <div>
+                  <label for="name">
+                    Project Name
+                    <span class="required">*</span>
+                  </label>
+                  <span class="text-danger error-text"
+                    *ngIf="ConnectionForm.controls['projectName'].touched && ConnectionForm.controls['projectName'].errors !== null">
+                    <span *ngIf="ConnectionForm.controls['projectName']['errors']['required']">
+                      Required
+                    </span>
+                  </span>
+                  <input type="text" class="form-control" placeholder="Enter Project Name"
+                  formControlName="projectName" />
+                  <span class="text-danger error-text"
+                    *ngIf="ConnectionForm.controls['projectName'].touched && ConnectionForm.controls['projectName'].errors !== null">
+
+                    <div *ngIf="ConnectionForm.controls['projectName']['errors']['pattern']">
+                      Please try again without any space:
+                    </div>
+                    <div *ngIf="ConnectionForm.controls['projectName']['errors']!['maxlength']">
+                      length should be 100 characters or less.
+                    </div>
+                  </span>
+                </div>
+                <!-- server name....................................... -->
+                <div>
+                  <label for="name">
+                    Server Name <span class="required">*</span></label>
+                  <span class="text-danger error-text"
+                    *ngIf="ConnectionForm.controls['serverName'].touched && ConnectionForm.controls['serverName'].errors !== null">
+                    <span *ngIf="ConnectionForm.controls['serverName']['errors']!['required']">
+                      Required
+                    </span>
+                  </span>
+                  <input type="text" class="form-control" placeholder="Enter Server Name"
+                    formControlName="serverName" />
+                    <span class="text-danger error-text"
+                    *ngIf="ConnectionForm.controls['serverName'].touched && ConnectionForm.controls['serverName'].errors !== null">
+                    <div *ngIf="ConnectionForm.controls['serverName']['errors']!['maxlength']">
+                      length should be 100 characters or less.
+                    </div>
+                  </span>
+                </div>
+                <!--user name ....................................... -->
+                <div>
+                  <label for="name"> User Name <span class="required">*</span></label>
+                  <span class="text-danger error-text"
+                    *ngIf="ConnectionForm.controls['username'].touched && ConnectionForm.controls['username'].errors !== null">
+                    <span *ngIf="
+                    ConnectionForm.controls['username']['errors'][
+                    'required']
+                    ">
+                      Required
+                    </span>
+
+                  </span>
+                  <input type="text" class="form-control" placeholder="Enter User Name" formControlName="username" />
+                  <span class="text-danger error-text"
+                  *ngIf="ConnectionForm.controls['username'].touched && ConnectionForm.controls['username'].errors !== null">
+                  <div *ngIf="ConnectionForm.controls['username']['errors']['pattern']">
+                    Please make sure your input includes alphabets, numbers, and only the special characters "_, -, &"
+                  </div>
+                  <div *ngIf="ConnectionForm.controls['username']['errors']!['maxlength']">
+                    length should be 100 characters or less.
+                  </div>
+                </span>
+                </div>
+                <!--server type ....................................... -->
+                <div>
+                  <label for="servertype">
+                    Server Type <span class="required">*</span>
+                  </label>
+                  <span class="text-danger error-text"
+                    *ngIf="ConnectionForm.controls['datatype'].touched && ConnectionForm.controls['datatype'].errors !== null">
+                    <span *ngIf="ConnectionForm.controls['datatype']['errors']!['required']">
+                      Required
+                    </span>
+                    <!-- <div *ngIf="ConnectionForm.controls['serverName']['errors']!['maxlength']">
+                      Maximum length exceeded (maximum: 255 characters)
+                    </div> -->
+                  </span>
+                  <select class="form-select select-drop form-control" formControlName="datatype">
+                    <option value=""  selected>Select Server Type</option>
+
+                    <option *ngFor="let option of datatype" [value]="option.serverTypeName">
+                      {{ option.serverTypeName }}
+                    </option>
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="col-md-6">
+
+                <!--Project description ....................................... -->
+                <div>
+                  <label for="name">Project Description</label>
+                  <span class="text-danger error-text"
+                    *ngIf="ConnectionForm.controls['projectDescription'].touched && ConnectionForm.controls['projectDescription'].errors !== null">
+                    <!-- <span *ngIf="ConnectionForm.controls['projectName']['errors']!['required']">
+                    Required
+                  </span> -->
+
+                  </span>
+                  <input type="text" class="form-control" placeholder="Enter Project Description(Optional)"
+                    formControlName="projectDescription" />
+                    <span class="text-danger error-text"
+                    *ngIf="ConnectionForm.controls['projectDescription'].touched && ConnectionForm.controls['projectDescription'].errors !== null">
+                    <!-- <span *ngIf="ConnectionForm.controls['projectName']['errors']!['required']">
+                    Required
+                  </span> -->
+                    <div *ngIf="ConnectionForm.controls['projectDescription']['errors']!['maxlength']">
+                      length should be 100 characters or less.
+                    </div>
+                  </span>
+                </div>
+                <!--database name....................................... -->
+
+                <div>
+                  <label for="name"> Database Name <span class="required">*</span></label>
+                  <span class="text-danger error-text"
+                    *ngIf="ConnectionForm.controls['databaseName'].touched && ConnectionForm.controls['databaseName'].errors !== null">
+                    <span *ngIf="ConnectionForm.controls['databaseName']['errors']!['required']">
+                      Required
+                    </span>
+                  </span>
+                  <input type="text" class="form-control" placeholder="Enter Database Name"
+                    formControlName="databaseName" />
+                    <span class="text-danger error-text"
+                    *ngIf="ConnectionForm.controls['databaseName'].touched && ConnectionForm.controls['databaseName'].errors !== null">
+                    <div *ngIf="ConnectionForm.controls['databaseName']['errors']!['maxlength']">
+                      length should be 100 characters or less.
+                    </div>
+                  </span>
+                </div>
+                <!--password ....................................... -->
+                <div>
+                  <div class="password-input-container">
+                    <label for="password">Password <span class="required">*</span></label>
+                    <span class="text-danger error-text"
+                      *ngIf="ConnectionForm.controls['password'].touched && ConnectionForm.controls['password'].errors !== null">
+                      <span *ngIf="ConnectionForm.controls['password']['errors']!['required']">
+                        Required
+                      </span>
+                    </span>
+                    <input type="{{ hidePassword ? 'password' : 'text' }}" [(ngModel)]="password" class="form-control"
+                      placeholder="Enter User Password" formControlName="password" />
+                    <span (click)="togglePasswordVisibility()" class="password-icon">
+                      <i *ngIf="!hidePassword" class="ri-eye-line"></i>
+                      <i *ngIf="hidePassword" class="ri-eye-off-line"></i>
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn modal-closeBtn" data-bs-dismiss="modal" (click)="editClose()">
+            Close
+          </button>
+          <button type="button" class="btn modal-saveBtn" (click)="submitConnectionForm(ConnectionForm.value)"
+            [disabled]="ConnectionForm.invalid" data-bs-dismiss="modal">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Edit -->
+
+<div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Project</h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="editClose()"></button>
+      </div>
+
+      <form [formGroup]="ConnectionForm">
+        <div class="modal-body">
+          <div class="container-fluid my-2">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="name">
+                  Project Name <span class="required">*</span>
+                </label>
+                <span class="text-danger"
+                  *ngIf="ConnectionForm.controls['projectName'].touched && ConnectionForm.controls['projectName'].errors !== null">
+                  <span *ngIf="ConnectionForm.controls['projectName']['errors']['required']">
+                    Required
+                  </span>
+                </span>
+                <input type="text" class="form-control" placeholder="Enter Project Name"
+                  formControlName="projectName" />
+                  <span class="text-danger"
+                  *ngIf="ConnectionForm.controls['projectName'].touched && ConnectionForm.controls['projectName'].errors !== null">
+
+                  <div *ngIf="ConnectionForm.controls['projectName']['errors']['pattern']">
+                    Please try again without any space:
+                  </div>
+                  <div *ngIf="ConnectionForm.controls['projectName']['errors']!['maxlength']">
+                    length should be 100 characters or less.
+                  </div>
+                </span>
+              </div>
+
+              <div class="col-md-6">
+                <label for="name">Project Description</label>
+                <span class="text-danger"
+                  *ngIf="ConnectionForm.controls['projectDescription'].touched && ConnectionForm.controls['projectDescription'].errors !== null">
+                  <!-- <span *ngIf="ConnectionForm.controls['projectName']['errors']!['required']">
+                    Required
+                  </span> -->
+
+                </span>
+                <input type="text" class="form-control" placeholder="Enter Project Description(Optional)"
+                  formControlName="projectDescription" />
+                  <span class="text-danger"
+                  *ngIf="ConnectionForm.controls['projectDescription'].touched && ConnectionForm.controls['projectDescription'].errors !== null">
+                  <!-- <span *ngIf="ConnectionForm.controls['projectName']['errors']!['required']">
+                    Required
+                  </span> -->
+                  <div *ngIf="ConnectionForm.controls['projectDescription']['errors']!['maxlength']">
+                    length should be 100 characters or less.
+                  </div>
+                </span>
+              </div>
+
+              <div class="col-md-6">
+                <label for="name">
+                  Server Name <span class="required">*</span>
+                </label>
+                <span class="text-danger"
+                  *ngIf="ConnectionForm.controls['serverName'].touched && ConnectionForm.controls['serverName'].errors !== null">
+                  <span *ngIf="ConnectionForm.controls['serverName']['errors']!['required']">
+                    Required
+                  </span>
+
+                </span>
+                <input type="text" class="form-control" placeholder="Enter Server Name" formControlName="serverName" />
+                <span class="text-danger"
+                  *ngIf="ConnectionForm.controls['serverName'].touched && ConnectionForm.controls['serverName'].errors !== null">
+
+                  <div *ngIf="ConnectionForm.controls['serverName']['errors']!['maxlength']">
+                    length should be 100 characters or less.
+                  </div>
+                </span>
+              </div>
+
+              <div class="col-md-6">
+                <label for="name">
+                  Database Name <span class="required">*</span>
+                </label>
+                <span class="text-danger"
+                  *ngIf="ConnectionForm.controls['databaseName'].touched && ConnectionForm.controls['databaseName'].errors !== null">
+                  <span *ngIf="ConnectionForm.controls['databaseName']['errors']!['required']">
+                    Required
+                  </span>
+
+                </span>
+                <input type="text" class="form-control" placeholder="Enter Database Name"
+                  formControlName="databaseName" />
+                  <span class="text-danger"
+                  *ngIf="ConnectionForm.controls['databaseName'].touched && ConnectionForm.controls['databaseName'].errors !== null">
+
+                  <div *ngIf="ConnectionForm.controls['databaseName']['errors']!['maxlength']">
+                    length should be 100 characters or less.
+                  </div>
+                </span>
+              </div>
+
+              <div class="col-md-6">
+                <label for="name"> User Name <span class="required">*</span>
+                </label>
+                <span class="text-danger"
+                  *ngIf="ConnectionForm.controls['username'].touched && ConnectionForm.controls['username'].errors !== null">
+                  <span *ngIf="
+                  ConnectionForm.controls['username']['errors'][
+                  'required']
+                  ">
+                    Required
+                  </span>
+                </span>
+                <input type="text" class="form-control" placeholder="Enter User Name" formControlName="username" />
+                <span class="text-danger"
+                  *ngIf="ConnectionForm.controls['username'].touched && ConnectionForm.controls['username'].errors !== null">
+                  <div *ngIf="ConnectionForm.controls['username']['errors']['pattern']">
+                    Please make sure your input includes alphabets, numbers, and only the special characters "_, -, &"
+                  </div>
+                  <div *ngIf="ConnectionForm.controls['username']['errors']!['maxlength']">
+                    length should be 100 characters or less.
+                  </div>
+                </span>
+              </div>
+
+              <div class="col-md-6">
+                <label for="name"> Password <span class="required">*</span></label>
+                <span class="text-danger"
+                  *ngIf="ConnectionForm.controls['password'].touched && ConnectionForm.controls['password'].errors !== null">
+                  <span *ngIf="ConnectionForm.controls['password']['errors']!['required']">
+                    Required
+                  </span>
+                  <!-- <div *ngIf="ConnectionForm.controls['password']['errors']!['maxlength']">
+                    Maximum length exceeded (maximum: 255 characters)
+                  </div> -->
+                </span>
+                <input type="{{ hidePassword ? 'password' : 'text' }}" [(ngModel)]="password" class="form-control"
+                  placeholder="Enter User Password" formControlName="password" />
+                <span (click)="togglePasswordVisibility()" class="password-iconEdit">
+                  <i *ngIf="!hidePassword" class="ri-eye-line"></i>
+                  <i *ngIf="hidePassword" class="ri-eye-off-line"></i>
+                </span>
+              </div>
+
+              <div class="col-md-6">
+                <label for="name">
+                  Server Type <span class="required">*</span>
+                </label>
+                <span class="text-danger"
+                  *ngIf="ConnectionForm.controls['datatype'].touched && ConnectionForm.controls['datatype'].errors !== null">
+                  <span *ngIf="ConnectionForm.controls['datatype']['errors']!['required']">
+                    Required
+                  </span>
+                  <!-- <div *ngIf="ConnectionForm.controls['serverName']['errors']!['maxlength']">
+                    Maximum length exceeded (maximum: 255 characters)
+                  </div> -->
+                </span>
+                <select class="form-select select-drop form-control" style="width: 200px" formControlName="datatype">
+                  <option value="" selected>Select Server Type</option>
+
+                  <!-- Default option -->
+
+                  <option *ngFor="let option of datatype" [value]="option.serverTypeName">
+                    {{ option.serverTypeName }}
+                  </option>
+                </select>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="modal-footer">
+        <button type="button" class="btn modal-closeBtn" data-bs-dismiss="modal" (click)="editClose()">
+          Close
+        </button>
+
+        <button type="button" class="btn modal-saveBtn" (click)="editProject(ConnectionForm.value)"
+          [disabled]="ConnectionForm.invalid" data-bs-dismiss="modal">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Copy DB................................................ -->
+<div class="modal fade" id="copyDB" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Copy Attributes</h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <label for="projectName" class="form-label label-bold">Project Name</label><span class="required"> *</span>
+
+        <select id="copydataid" [(ngModel)]="copyprojectid" [(ngModel)]="copyatributeselectdropdown" class="form-select select-drop form-control">
+          <option value="" disabled selected>Select Project</option>
+
+          <option *ngFor="let option of ProjectliOptions; let i = index" [value]="option.projectId">
+            {{ option.projectName }}
+          </option>
+        </select>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn modal-closeBtn" data-bs-dismiss="modal">
+          Close
+        </button>
+
+        <button type="button" class="btn modal-saveBtn" data-bs-dismiss="modal" (click)="onSaveChanges(copyprojectid)" [disabled]="!copyprojectid" >
+          Copy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

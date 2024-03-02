@@ -1,0 +1,68 @@
+/* Styles Starts here...................................................... */
+.kalpita-logo{
+  max-width: 100px;
+}
+.navbar{
+  padding: 0px 0px;
+}
+.header-menu .nav-link{
+  padding: 1.5rem 1rem;
+  cursor: pointer;
+}
+.nav-link{
+/* font-weight: 600; */
+color: black;
+}
+.navbar-bg{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+background-color: white;
+color: #53BBB8;
+}
+
+.active{
+  /* background-color: #eba346;
+  color: white;
+border-radius: 25px;      */
+background-color: transparent;
+    color: #53BBB8 !IMPORTANT;
+    font-weight: 500 !important;
+    font-size: 1.0rem;
+    border-bottom: 0.3em solid #53BBB8;
+    border-radius: 0;
+}
+.navbar-nav .nav-link.active{
+color: white;
+}
+.navbar-nav .nav-link.show {
+color: #53BBB8;
+}
+.dropdown-item.active, .dropdown-item:active {
+background-color: #53BBB8;
+}
+.navbar-expand-lg .navbar-nav .nav-link {
+padding-right: 1rem;
+padding-left: 1rem;
+}
+.nav-link{
+transition: color .15s ease-in-out,background-color .0s ease-in-out,border-color .15s ease-in-out;
+}
+.btn-secondary{
+  background-color: #53BBB8;
+  color: white;
+}
+@media only screen and (min-width: 200px) and (max-width: 1000px) {
+  .header-menu .nav-link{
+    padding: 0.5rem 0.3rem;
+    cursor: pointer;
+  }
+  .active{
+      border-bottom: none;
+  }
+  .navbar{
+    padding: 0.3rem 1rem;
+  }
+  .btncircle{
+    radius: 50%;
+    background-color: green;
+  }
+}

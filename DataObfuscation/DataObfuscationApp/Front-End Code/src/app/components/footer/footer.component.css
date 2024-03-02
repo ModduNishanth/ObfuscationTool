@@ -1,0 +1,22 @@
+.footer-wrap{
+    
+    position: fixed;
+    height: auto;
+    background-image: linear-gradient(to right, #7983DE , #53BBB8);
+    color: #ffffff;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+
+}
+
+button {
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 5px;
+    outline: none;
+  }

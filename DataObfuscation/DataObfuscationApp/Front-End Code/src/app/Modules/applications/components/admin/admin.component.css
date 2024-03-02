@@ -1,0 +1,64 @@
+.checkbox-function {
+  margin: 5px 10px;
+}
+/* .table>:not(caption)>*>* {
+    border-bottom: 0;
+} */
+/* tr {
+  padding: 5px 0px;
+  border-bottom: 1px solid#ABA6A6;
+} */
+ /* tr:last-child {
+    border-bottom: 0;
+} */
+.button-bottom{
+  border-bottom: 0;
+}
+.query-btn {
+  padding: 3px 5px;
+  margin: 4px 0px 2px 0px;
+  border: 1px solid #ABA6A6;
+}
+.datatable{
+    color: black;
+    border: 1px solid#ABA6A6;
+    background-color: white;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+.colheading {
+  color: white;
+  background-color: #7983DE;
+}
+
+.submit-btns {
+  background-color: #016194;
+  color: white;
+  margin: 5px 5px;
+}
+.label-bold{
+  font-weight: 600;
+}
+.ico-cursor{
+  cursor: pointer;
+}
+.preview-icon{
+  text-align: center;
+}
+.required {
+  color: red;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  color: #7983DE;
+}
+::ng-deep .ngx-pagination .current {
+  background:#7983DE!important;
+}
+.form-control{
+  height: auto;
+}

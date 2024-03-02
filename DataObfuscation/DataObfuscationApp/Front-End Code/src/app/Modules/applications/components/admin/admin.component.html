@@ -1,0 +1,194 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h4 class="fw-bold pt-3">Function</h4>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row table-bg py-3">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6 first-dropdown py-3">
+          <label for="projectName" class="form-label label-bold"
+            >Project Name <span class="required">*</span></label
+          >
+
+          <select id="pet-select" #project (change)="onSelected(project.value)" class="form-select select-drop form-control">
+            <option value=""disabled selected>Select Project</option>
+
+            <option
+              *ngFor="let option of ProjectList"
+              [value]="option.projectId"
+            >
+              {{ option.projectName }}
+            </option>
+          </select>
+        </div>
+        <!-- <div class="col-md-6 second-dropdown py-3">
+          <select  #database (change)="submitDataBasetype(database.value)">
+            <option value="" disabled selected>Select Database</option>
+            <option *ngFor="let option of datatype" [value]="option.value"   >{{option.value}}</option>
+        </select>
+        </div>         -->
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="datatable">
+            <table class="w-100 table table-responsive">
+              <thead>
+                <tr>
+                  <th class="colheading">Functions</th>
+                  <th class="colheading"></th>
+                </tr>
+              </thead>
+
+              <!-- Function rows -->
+              <tbody>
+                <tr>
+                  <td>
+                    <input
+                      class="checkbox-function"
+                      type="checkbox"
+                      [(ngModel)]="selectAllChecked"
+                      (ngModelChange)="selectAllFunctions()"
+                    />
+                    <span>Select All</span>
+                  </td>
+                </tr>
+                <ng-container *ngIf="selectedId>0; else noRecords">
+                <tr *ngFor="let option of Functionlist | paginate: { itemsPerPage: 10, currentPage: page };  ">
+                  <td>
+                    <span>
+                      <input
+                        style="margin-left: 10px; margin-right: 10px"
+                        [(ngModel)]="option.isChecked"
+                        (click)="CheckedFunction(option.newColumnName)"
+                        type="checkbox"
+                        name="test"
+                        id="test"
+                      />
+                      {{ option.newColumnName }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <button
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      (click)="getFunctionQuery(option.functionDefinition)"
+                      style="margin-top: 15px"
+                      class="btn modal-closeBtn"
+                      title="View the function query"
+                    >
+                      Show Query
+                    </button>
+                  </td>
+                </tr>
+                <tr class="button-bottom" *ngIf="!isColumnNamesEmpty">
+                  <td colspan="2" class="p-2">
+                    <button
+                      class="btn modal-saveBtn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#DeployModal"
+                      title="Deploy the functions in Connected Database"
+                    >
+                      Deploy
+                    </button>
+                  </td>
+                </tr>
+                <tr class="button-bottom" *ngIf="isColumnNamesEmpty">
+                  <td colspan="2" class="p-2">
+                    <button
+                      class="btn modal-saveBtn"
+                      (click)="onSelectedFunction()"
+                    >
+                      Deploy
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-template #noRecords>
+                <tr>
+                  <td colspan="3" class="text-center">No records found</td>
+                </tr>
+              </ng-template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Function Script</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+           <pre><p>{{ functionDefinition }}</p></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Deploy model -->
+<div
+id="DeployModal"
+class="modal fade"
+tabindex="-1"
+aria-labelledby="DeployModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="DeployModalLabel">
+        Confirm Deploy
+      </h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      Do You want to Deploy the function?
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+      >
+        No
+      </button>
+      <button
+        type="button"
+        class="btn submit-btns"
+        data-bs-dismiss="modal"  (click)="onSelectedFunction()"
+      >
+      Yes
+      </button>
+    </div>
+  </div>
+</div>
+</div>

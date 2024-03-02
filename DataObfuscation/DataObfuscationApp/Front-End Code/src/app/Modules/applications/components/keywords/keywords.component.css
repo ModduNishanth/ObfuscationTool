@@ -1,0 +1,43 @@
+.delete {
+    margin-left: 10px;
+    color: crimson;
+  }
+
+  .ico-delete-color{
+    color: red;
+  }
+  .colheading {
+    color: white;
+  background-color: #7983DE;
+  }
+  .icon-center {
+    display: inline-block;
+    text-align: center;
+    /* width: 100%; */
+  }
+  .required {
+    color: red;
+  }
+.button3{
+  background-color: #53BBB8;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+}
+ /* pagination 1,2,3...next */
+ .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  color: #7983DE;
+}
+::ng-deep .ngx-pagination .current {
+  background:#7983DE!important;
+}
+button:focus {
+  outline: 2px solid rgb(18, 212, 238); /* Change the color and style as needed */
+}
+.form-control{
+  height: auto;
+}

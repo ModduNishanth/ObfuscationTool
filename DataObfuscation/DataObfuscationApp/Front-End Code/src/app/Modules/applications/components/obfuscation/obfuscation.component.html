@@ -1,0 +1,175 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h4 class="fw-bold pt-3">Obfuscation</h4>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row table-bg py-3">
+    <div class="col-md-6">
+      <label for="projectName" class="form-label label-bold"
+        >Project Name <span class="required">*</span></label
+      >
+      <select id="pet-select" #project (change)="onSelected(project.value)" class="form-select select-drop form-control">
+        <option value="" disabled selected>Select Project</option>
+        <option *ngFor="let option of ProjectList" [value]="option.projectId">
+          {{ option.projectName }}
+        </option>
+      </select>
+      <p class="py-1">
+        <b class="databaseTag" *ngFor="let option of selectedProjectvalue"
+          >Database : {{ option.databaseName }}</b
+        >
+      </p>
+      <div>
+        <input
+          class="checkbox-function"
+          type="checkbox"
+          name="test"
+          [(ngModel)]="isAllChecked"
+          #columncheck
+          [disabled]="!isProjectSelected"
+          (change)="checkUncheckAll($event)"
+        />Select All
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="datatable">
+        <table class="table table-responsive">
+          <thead>
+            <tr>
+              <th class="colheading">Table Name</th>
+              <th class="colheading">Status</th>
+              <th class="colheading">Last Obfuscated Date</th>
+              <th class="colheading">Error</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <!-- <td class="p-2">
+                <input
+                  class="checkbox-function"
+                  type="checkbox"
+                  name="test"
+                  [(ngModel)]="isAllChecked"
+                  #columncheck
+                  (change)="checkUncheckAll($event)"
+                />Select All
+              </td> -->
+              <td></td>
+              <td></td>
+            </tr>
+            <ng-container  *ngIf="newTableList.length > 0; else noRecords">
+
+
+            <tr *ngFor="let option of newTableList | paginate: { itemsPerPage: 10, currentPage: page };">
+              <td>
+                <input
+                  type="checkbox"
+                  class="checkbox-function"
+                  name="test"
+                  id="test"
+                  [(ngModel)]="option.isChecked"
+                  [disabled]="option.name.obfuscated == true"
+                  [value]="option.name.tableNames"
+                  (change)="ObfuscationQuery($event)"
+                />{{ option.name.tableNames }}
+              </td>
+
+              <td>
+                <ng-container
+                  *ngIf="option.name.obfuscated == true; else notObfuscated"
+                >
+                  <p>Obfuscated</p>
+                </ng-container>
+                <ng-template #notObfuscated><p>Not Obfuscated</p></ng-template>
+              </td>
+
+              <td>
+                <p>
+                  {{ option.name.obfuscatedDate | date : "dd-MMM-yyyy" }}
+                </p>
+              </td>
+              <td *ngIf="option.name.tableNames === matchedTableName">
+                {{ matchedErrorMessage }}
+              </td>
+            </tr>
+          </ng-container>
+            <ng-template #noRecords>
+
+                <td colspan="12" class="text-center">No records found</td>
+
+            </ng-template>
+          </tbody>
+          <div class="p-3 button-subreset">
+            <span>
+              <button
+                data-bs-target="#exampleModal"
+                class="btn btn-primary obfuscate-btns"
+                (click)="OnSubmit()"
+                title="Obfuscate the Data"
+              >
+                Obfuscate
+              </button>
+            </span>
+
+            <span class="ps-2" >
+              <button
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              class="btn btn-primary obfuscate-btns"
+              title="Delete the Table from Obfuscation list"
+              (click)="OnDeleteModel()" >
+                Delete
+              </button>
+            </span>
+            <span class="ps-2"
+              ><button
+                data-bs-target="#exampleModal"
+                class="btn btn-primary reset-btn"
+                title="Re-enable the obfuscation proccess for selected project"
+                (click)="UpdateColumn()">
+                Re-enable Obfuscation
+              </button></span
+            >
+          </div>
+        </table>
+        <div *ngIf="newTableList.length > 10">
+          <div class="pagination">
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- model for delete -->
+<ng-container *ngIf="this.checkBoxList.length >=1">
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+              <div class="modal-body">
+                Are you sure you want to delete the selected table from the Obfuscation Configuration?"
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger"  data-bs-dismiss="modal" (click)="OnDelete()">Yes</button>
+              </div>
+       </div>
+    </div>
+
+ </div>
+
+</ng-container>
+
+
+

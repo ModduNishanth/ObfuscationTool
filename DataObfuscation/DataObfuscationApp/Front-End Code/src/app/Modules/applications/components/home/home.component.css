@@ -1,0 +1,27 @@
+/* .welcome-body{
+    background-color: rgb(169, 223, 206);
+} */
+.submit-btns {
+  margin-left:5px;
+  background-color: #016194;
+  color: white;
+}
+
+  .button:hover {
+    background-color: #45a049;
+  }
+
+  .output {
+    /* margin-top: 20px; */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    word-wrap: break-word;
+  }
+  h1 {
+    color: #333;
+    text-align: center;
+  }
+
+

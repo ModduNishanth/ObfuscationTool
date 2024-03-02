@@ -1,0 +1,47 @@
+<div class="container py-3">
+  <div class="row">
+    <div class="col-md-12">
+      <h4 class="fw-bold py-2">Welcome to Data Obfuscation Page</h4>
+    </div>
+  </div>
+  <div class="row table-bg">
+    <div class="col-md-12 pt-2">
+      <!-- <h2 class="py-3">Welcome to Data Obfuscation Page</h2> -->
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Enter your data :</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="inputData"></textarea>
+      </div>
+      <!-- <label class="label">Enter your data:</label>
+      <textarea class="input" rows="5" [(ngModel)]="inputData"></textarea> -->
+
+      <button   class="btn submit-btns"
+      type="button" (click)="obfuscateData()">Obfuscate</button>
+
+      <div class="output my-3">
+        <label class="label">Obfuscated data :</label>
+        <div id="obfuscatedData">{{ obfuscatedData }}</div>
+      </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+<!-- <div>
+<div class="container" style="background-color: rgb(169, 223, 206); ">
+  <h1>Welcome to Data Obfuscation Page</h1>
+
+  <label class="label">Enter your data:</label>
+  <textarea class="input" rows="5" [(ngModel)]="inputData"></textarea>
+
+  <button class="button" (click)="obfuscateData()">Obfuscate</button>
+
+  <div class="output">
+    <label class="label">Obfuscated data:</label>
+    <div id="obfuscatedData">{{ obfuscatedData }}</div>
+  </div>
+</div>
+</div> -->
+

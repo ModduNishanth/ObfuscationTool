@@ -1,0 +1,89 @@
+<!-- <nav class="navbar navbar-expand-lg navbar-bg">
+  <div class="container-fluid">
+  <a class="navbar-brand" routerLink="/"><img src="/assets/kalpita-logo.svg" alt="kptLogo" class="kalpita-logo"/></a>
+  <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+  >
+  <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+          <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" routerLink="/connect" routerLinkActive="active">Project Master </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" routerLink="/processpage" routerLinkActive="active">Mapping </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" routerLink="/obfuscation" routerLinkActive="active">Obfuscation</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" routerLink="/help" routerLinkActive="active">Help </a>
+      </li>
+      <li class="nav-item px-2">
+        <button class="btn btn-success btn-md">Sign In</button>
+      </li>
+  </ul>
+  <form class="d-flex me-2" role="search">
+    <button class="btn btn-success btn-md">Sign In</button>
+  </form>
+  </div>
+
+  </div>
+  </nav> -->
+
+
+  <nav class="navbar navbar-expand-lg navbar-bg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/obfuscation/home"><img src="/assets/kalpita-logo.svg" alt="kptLogo" class="kalpita-logo" /></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav ms-lg-5 ms-0 me-auto mb-2 mb-lg-0 header-menu">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/obfuscation/project" routerLinkActive="active">Project</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/obfuscation/mapping" routerLinkActive="active">Mapping </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/obfuscation/obfuscation" routerLinkActive="active">Obfuscation</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+              routerLinkActive="active">
+              Admin
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" routerLink="/obfuscation/keywords">Keywords</a>
+              </li>
+              <li><a class="dropdown-item" routerLink="/obfuscation/functions">Functions</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/obfuscation/help" routerLinkActive="active">Help </a>
+          </li>
+        </ul>
+        <span class="navbar-text">
+          <button class="btn btn-secondary btn-md" title="Logout" (click)="logout()"><i class="ri-shut-down-line ico-signout"></i></button>
+        </span>
+      </div>
+
+    </div>
+  </nav>
+

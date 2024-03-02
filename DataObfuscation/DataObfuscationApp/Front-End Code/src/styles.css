@@ -1,0 +1,152 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+@import '~ngx-toastr/toastr';
+body{
+  margin-bottom: 4rem;
+  font-family: 'Poppins', sans-serif;
+}
+.router-body{
+  padding-top: 5rem;
+}
+*{
+font-family: 'Poppins', sans-serif;
+}
+
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #e01a76;
+}
+tbody, td, tfoot, th, thead, tr {
+  border-color: #EEEEEE;
+  border-style: solid;
+  border-width: 2px;
+}
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+thead tr{
+  background: #cdc6c6;
+}
+.blue-btn{
+  background-color:#016194;
+  color: white;
+  font-size: 14px;
+  border-radius: 0;
+  padding: 8px 8px;
+
+}
+select {
+  word-wrap: normal;
+  width: 100% !important;
+  height: 27px;
+}
+/* .table-bg{
+  background-color: #e3f3f8;
+} */
+.submit-btns{
+  background-color: #016194;
+  color: white;
+}
+.colheading {
+  background-color: #7983DE;
+  color: white;
+  /* text-align: center; */
+}
+.modal-header{
+  background-color: #7983DE;
+  color: white;
+}
+.modal-header .btn-close {
+  --bs-btn-close-color: white!important;
+  --bs-btn-close-bg: url('../src/assets/close-button.svg');
+  --bs-btn-close-opacity: 1;
+    --bs-btn-close-hover-opacity: 0.75;
+}
+
+.modal-closeBtn{
+  background-color: white;
+  color: #53BBB8;
+  border: 1px solid #53BBB8;
+}
+.modal-saveBtn{
+  background-color: #53BBB8;
+  color: white;
+  border: 1px solid #53BBB8;
+}
+.modal-closeBtn:hover{
+  background-color: white;
+  color: #53BBB8;
+  border: 1px solid #53BBB8;
+}
+.modal-saveBtn:hover{
+  background-color: #53BBB8;
+  color: white;
+  border: 1px solid #53BBB8;
+}
+.modal-saveBtn:active, .modal-saveBtn:disabled{
+  background-color: #53BBB8;
+  color: white;
+  border: 1px solid #53BBB8;
+}
+
+.modal-footer{
+  border-top: none;
+}
+
+.edit-btn{
+  color: #53BBB8;
+  /* margin: 0rem 1rem; */
+}
+
+.edit-btn:active{
+  background-color: #53BBB8;
+  color: white;
+}
+.edit-btn:hover{
+  background-color: #53BBB8;
+  color: white;
+}
+.dlt-btn{
+  color: #BF4646;
+  /* margin: 0rem 1rem; */
+ }
+.dlt-btn:hover{
+  background-color: #BF4646;
+  color: white;
+}
+
+ .dlt-btn:active{
+  background-color: #BF4646;
+  color: white;
+}
+
+.single-line-toast {
+  padding: 15px;
+  margin: 5px;
+  width: 45%;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-overflow: ellipsis;
+  border-radius: 5px;
+  margin-left: 32%;
+  background-image: none;
+  color: white;
+}
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+  .single-line-toast{
+    width: 45%;
+  }
+}
